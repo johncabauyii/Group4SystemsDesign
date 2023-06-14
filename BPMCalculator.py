@@ -8,24 +8,19 @@ class BPMCalculator:
     def __init__(self):
         
         self.beat = PulsePlotter()
-        self.beatTime = HardwareTimer(self)
+        #self.beatTime = HardwareTimer(self)
         
-        
-    """def calculate(self):
-        self.beats=0
-        self.timer = self.beatTime.start(5)
-        self.beat = self.beat.detectPulse()
-        
-        if self.beat:
-            self.beats = self.beats+1
-        
-        T = self.timer.check()
-        
-        print(T)"""
+    def calculate_bpm(t):
+        global beats
+        print('BPM:', beats * 6) # Triggered every 10 seconds, * 6 = bpm
+        beats = 0
+
+    timer = Timer(1)
+    timer.init(period=10000, mode=Timer.PERIODIC, callback=calculate_bpm)
     
-    def calculate(self):
-        print("ok")
-        #self.beatTime.start(seconds = 5, mode=Timer.ONE_SHOT, callback = calculate())
+    """def calculate(self):
+        print("ok")'
+        #self.beatTime.start(seconds = 5, mode=Timer.ONE_SHOT, callback = calculate())"""
         
         
         

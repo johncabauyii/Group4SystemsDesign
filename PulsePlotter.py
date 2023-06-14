@@ -14,10 +14,10 @@ class PulsePlotter:
         self.plot = NeoPixel(0, 8, 0.5)
     
     
-    def plotPulse(self):
+    def plotPulse(self, color = WHITE):
         p = self.pulseSensor.rawValue()//7000
         
-        self.plot.setColor(RED, p)
+        self.plot.setColor(color, p)
         
         if self.pulseSensor.tripped():
             self.beeper.play(1000)

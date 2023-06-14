@@ -4,7 +4,7 @@ from time import sleep
 from CompositeLights import *
 
 from PulsePlotter import *
-from BPMCalculator import *
+from ModelTemplate import *
 
 
 #just a simple hardware test for components
@@ -35,13 +35,20 @@ while True:
     
     sleep(0.2)"""
 
-plotView = PulsePlotter()
+"""plotView = PulsePlotter()
 
 
 while True:
     plotView.plotPulse()
     
-    print("pulse", plotView.thonnyPlot()//7000)
+    print("pulse", plotView.thonnyPlot()//7000)"""
+
+
+m= MyControllerTemplate()
+
+m.run()
+
+    
     
     
     

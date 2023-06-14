@@ -15,6 +15,7 @@ import time
 from Model import *
 from Button import *
 from Counters import *
+from PulsePlotter import *
 
 """
 This is the template Model Runner - you should rename this class to something
@@ -41,7 +42,13 @@ class MyControllerTemplate:
         # Instantiate a Model. Needs to have the number of states, self as the handler
         # You can also say debug=True to see some of the transitions on the screen
         # Here is a sample for a model with 4 states
-        self._model = Model(3, self, debug=True)
+        self._model = Model(5, self, debug=True)
+        
+        self.plotView = PulsePlotter()
+        
+        self.beats = 0
+        
+        self.color = WHITE
         
         # Up to 4 buttons and a timer can be added to the model for use in transitions
         # Buttons must be added in the sequence you want them used. The first button
@@ -55,6 +62,8 @@ class MyControllerTemplate:
         # obvously you only have BTN1_PRESS through BTN4_PRESS
         # BTN1_RELEASE through BTN4_RELEASE
         # and TIMEOUT
+        
+        self._model.addTransition(0, TIMEOUT, 1)
         
         # some examples:
         # etc.
@@ -79,7 +88,14 @@ class MyControllerTemplate:
             
         # Now if you want to do different things for each state you can do it:
         if state == 0:
-            self._timer.start(5)
+            self.plotView.plotPulse(self.color)
+            print("pulse", self.plotView.thonnyPlot()//7000)
+            self._timer.check()
+            if self.plotView.detectPulse():
+                self.beats += 1
+                
+            
+            
             pass
         elif state == 1:
             # State1 do/actions
@@ -89,6 +105,8 @@ class MyControllerTemplate:
             # if self.motionsensor.tripped():
             # 	gotoState(2)
             pass
+            
+            
 
     """
     stateEntered - is the handler for performing entry/actions
@@ -99,14 +117,47 @@ class MyControllerTemplate:
         # Again if statements to do whatever entry/actions you need
         if state == 0:
             # entry actions for state 0
-            print('State 0 entered')
+            #print('State 0 entered')
+            self.beats = 0
+            color = WHITE
+            self._timer.start(5)
             pass
         
         elif state == 1:
             # entry actions for state 1
-            print('State 1 entered')
-            self._timer.start(5)
+            #print('State 1 entered')
+            BPM = self.beats * 12
+            print(BPM)
+            if BPM <= 59:
+                self._model.gotoState(2)
+            elif   60 <= BPM <=100:
+                self._model.gotoState(3)
+            elif BPM >=101:
+                self._model.gotoState(4)
+                
+        elif state == 2:
+        # entry actions for state 1
+            #print('State 2 entered')
+            self.color = BLUE
+            self._model.gotoState(0)
+            BPM = 0
         
+        elif state == 3:
+        # entry actions for state 1
+            #print('State 3 entered')
+            self.color = GREEN
+            self._model.gotoState(0)
+            BPM = 0
+        
+        elif state == 4:
+        # entry actions for state 1
+            #print('State 4 entered')
+            self.color = RED
+            self._model.gotoState(0)
+            BPM = 0 
+            
+
+
             
     """
     stateLeft - is the handler for performing exit/actions
