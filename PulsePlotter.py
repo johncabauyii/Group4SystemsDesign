@@ -14,7 +14,7 @@ class PulsePlotter:
         self.plot = NeoPixel(0, 8, 0.5)
     
     
-    def PlotPulse(self):
+    def plotPulse(self):
         p = self.pulseSensor.rawValue()//7000
         
         self.plot.setColor(RED, p)
@@ -25,5 +25,11 @@ class PulsePlotter:
             self.beeper.stop()
         sleep(0.1)
     
+    def thonnyPlot(self):
+        return self.pulseSensor.rawValue()
+    
+    def detectPulse(self):
+        if self.pulseSensor.tripped():
+            return True
     
     

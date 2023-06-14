@@ -55,7 +55,7 @@ class PassiveBuzzer(Buzzer):
     def play(self, tone=500):
         """ play the supplied tone. """
         
-        print(f"PassiveBuzzer: playing tone {tone}")
+        #print(f"PassiveBuzzer: playing tone {tone}")
         self._buz.freq(tone)
         self._buz.duty_u16(self._volume * 100)
         self._playing = True
@@ -63,14 +63,14 @@ class PassiveBuzzer(Buzzer):
     def stop(self):
         """ Stop playing sound """
         
-        print("PassiveBuzzer: stopping tone")
+        #print("PassiveBuzzer: stopping tone")
         self._buz.duty_u16(0)
         self._playing = False
 
     def setVolume(self, volume=5):
         """ Change the volume of the sound currently playing and future plays """
         
-        print(f"PassiveBuzzer: changing volume to {volume}")
+        #print(f"PassiveBuzzer: changing volume to {volume}")
         self._volume = volume
         if (self._playing):
             self._buz.duty_u16(self._volume * 100)

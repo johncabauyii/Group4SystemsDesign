@@ -3,12 +3,15 @@ from Sensors import *
 from time import sleep
 from CompositeLights import *
 
+from PulsePlotter import *
+from BPMCalculator import *
+
 
 #just a simple hardware test for components
 #works with sensor or with potentiometer
 #toDo: class for calculating pulse rate. ModelTemplate
 
-pulseSensor = AnalogSensor(2, lowactive=False, threshold = 30000)
+"""pulseSensor = AnalogSensor(2, lowactive=False, threshold = 30000)
 
 beeper = PassiveBuzzer(15)
 
@@ -30,4 +33,18 @@ while True:
         beeper.stop()
         
     
-    sleep(0.2)
+    sleep(0.2)"""
+
+plotView = PulsePlotter()
+
+
+while True:
+    plotView.plotPulse()
+    
+    print("pulse", plotView.thonnyPlot()//7000)
+    
+    
+    
+    
+    
+    

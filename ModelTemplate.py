@@ -12,7 +12,6 @@ those in your run method for transitions based on sensor events.
 
 # Import whatever Library classes you need - Model is obviously needed
 import time
-import random
 from Model import *
 from Button import *
 from Counters import *
@@ -37,18 +36,16 @@ class MyControllerTemplate:
         # Instantiate whatever classes from your own model that you need to control
         # Handlers can now be set to None - we will add them to the model and it will
         # do the handling
-        self._button = Button(10, "button1", buttonhandler=None)
         self._timer = SoftwareTimer(None)
         
         # Instantiate a Model. Needs to have the number of states, self as the handler
         # You can also say debug=True to see some of the transitions on the screen
         # Here is a sample for a model with 4 states
-        self._model = Model(2, self, debug=True)
+        self._model = Model(3, self, debug=True)
         
         # Up to 4 buttons and a timer can be added to the model for use in transitions
         # Buttons must be added in the sequence you want them used. The first button
         # added will respond to BTN1_PRESS and BTN1_RELEASE, for example
-        self._model.addButton(self._button)
         # add other buttons (up to 3 more) if needed
         
         # Add any timer you have.
@@ -60,8 +57,6 @@ class MyControllerTemplate:
         # and TIMEOUT
         
         # some examples:
-        self._model.addTransition(0, BTN1_PRESS, 1)
-        self._model.addTransition(1, TIMEOUT, 0)
         # etc.
     
     """
@@ -84,7 +79,7 @@ class MyControllerTemplate:
             
         # Now if you want to do different things for each state you can do it:
         if state == 0:
-            # State 0 do/actions
+            self._timer.start(5)
             pass
         elif state == 1:
             # State1 do/actions

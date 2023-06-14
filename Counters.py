@@ -154,11 +154,11 @@ class HardwareTimer(BaseTimer):
         super().__init__(handler)
         self._timer = Timer(-1)
 
-    def start(self, seconds):
+    def __start(self, seconds = 5, mode=Timer.ONE_SHOT, callback=None):
         """ Start the timer with the number of seconds to use. """
         
-        super().__start(seconds)
-        self._timer.init(period = int(seconds*1000), mode=Timer.ONE_SHOT, callback = self.timeout)
+        super().start(seconds)
+        self._timer.init(period = int(seconds*1000), mode=Timer.ONE_SHOT, callback=None)
 
     def cancel(self):
         """ Cancel the timer. Note that a normal stop will cause the handler callback. """
