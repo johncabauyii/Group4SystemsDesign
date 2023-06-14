@@ -71,7 +71,7 @@ class AnalogSensor(Sensor):
         
         v = self.rawValue()
         if (self._lowactive and v < self._threshold) or (not self._lowactive and v > self._threshold):
-            print("AnalogLightSensor: sensor tripped")
+            #print("AnalogLightSensor: sensor tripped")
             return True
         else:
             return False

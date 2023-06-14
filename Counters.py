@@ -188,7 +188,7 @@ class SoftwareTimer(BaseTimer):
     def start(self, seconds):
         """ Start the timer with a set number of seconds """
         
-        print(f"Starting timer with {seconds} seconds")
+        #print(f"Starting timer with {seconds} seconds")
         self._count = seconds
         self._starttime = time.ticks_ms()
         self._started = True
@@ -207,7 +207,7 @@ class SoftwareTimer(BaseTimer):
         """
         
         if self._started and time.ticks_diff(time.ticks_ms(), self._starttime) > self._count * 1000:
-            print(f"{self._count} sec timer is up")
+            #print(f"{self._count} sec timer is up")
             self._started = False
             self._count = 0
             self._handler.timeout()
