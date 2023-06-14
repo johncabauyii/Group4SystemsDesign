@@ -1,68 +1,33 @@
-"""from Sensors import *
+from Buzzer import *
+from Sensors import *
 from time import sleep
-from machine import Pin, Signal, ADC
+from CompositeLights import *
 
-a = AnalogSensor(0)
-adc = ADC(0)
-led = Signal(Pin(2, Pin.OUT), invert=True)
+
+#just a simple hardware test for components
+#works with sensor or with potentiometer
+#toDo: class for calculating pulse rate. ModelTemplate
+
+pulseSensor = AnalogSensor(2, lowactive=False, threshold = 30000)
+
+beeper = PassiveBuzzer(15)
+
+plot = NeoPixel(0, 8, 0.5)
+
+
+
 
 while True:
-    v = adc.read()
-    sleep(0.1)
-    print(v)
-    if v > 500:
-        led.off()
+    
+
+    p = pulseSensor.rawValue()//7000
+    
+    plot.setColor(RED, p)
+    
+    if pulseSensor.tripped():
+        beeper.play(1000)
     else:
-        led.on()"""
+        beeper.stop()
         
-        
-
-
-from machine import Pin, Signal, ADC, PWM
-adc = ADC(0)
-buzzer = PWM(Pin(14))
-buzzer.freq(500)
-
-# On my board on = off, need to reverse.
-led = Signal(Pin(2, Pin.OUT), invert=True)
-
-MAX_HISTORY = 250
-
-# Maintain a log of previous values to
-# determine min, max and threshold.
-history = []
-
-while True:
-    v = adc.read()
     
-    history.append(v)
-
-    # Get the tail, up to MAX_HISTORY length
-    history = history[-MAX_HISTORY:]
-
-    minima, maxima = min(history), max(history)
-
-    threshold_on = (minima + maxima * 3) // 4   # 3/4
-    threshold_off = (minima + maxima) // 2      # 1/2
-
-    if v > threshold_on:
-        led.on()
-        buzzer.duty(900)
-
-    if v < threshold_off:
-        led.off()
-        buzzer.duty(0)
-
-
-
-    
-        
-
-
-
-
-
-
-
-
-
+    sleep(0.2)
