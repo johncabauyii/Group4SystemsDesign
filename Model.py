@@ -108,7 +108,8 @@ class Model:
         
         if (newState < self._numstates):
             if self._debug:
-                print(f"Going from State {self._curState} to State {newState}")
+                #print(f"Going from State {self._curState} to State {newState}")
+                pass
             self._handler.stateLeft(self._curState)
             self._curState = newState
             self._handler.stateEntered(self._curState)
@@ -132,7 +133,8 @@ class Model:
                     print(f"Ignoring event {EVENTNAMES[event]}")
             else:
                 if self._debug:
-                    print(f"Processing event {EVENTNAMES[event]}")
+                    #print(f"Processing event {EVENTNAMES[event]}")
+                    pass
                 self.gotoState(self._transitions[self._curState][event])
 
     def run(self, delay=0.1):        

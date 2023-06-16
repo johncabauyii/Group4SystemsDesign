@@ -7,7 +7,7 @@ class PulsePlotter:
     
     def __init__(self):
     
-        self.pulseSensor = AnalogSensor(2, lowactive=False, threshold = 30000)
+        self.pulseSensor = AnalogSensor(2, lowactive=False, threshold = 40000)
 
         self.beeper = PassiveBuzzer(15)
 
@@ -30,8 +30,8 @@ class PulsePlotter:
     
     def detectPulse(self):
         if self.pulseSensor.tripped():
-            sleep(0.25)
-            print("tripped")
+            sleep(0.2)
+            #print("tripped")
             return True
     
     

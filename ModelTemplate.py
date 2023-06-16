@@ -52,6 +52,7 @@ class MyControllerTemplate:
         
         self.tone = 1000
         
+        
         # Up to 4 buttons and a timer can be added to the model for use in transitions
         # Buttons must be added in the sequence you want them used. The first button
         # added will respond to BTN1_PRESS and BTN1_RELEASE, for example
@@ -91,7 +92,7 @@ class MyControllerTemplate:
         # Now if you want to do different things for each state you can do it:
         if state == 0:
             self.plotView.plotPulse(self.color, self.tone)
-            print("pulse", self.plotView.thonnyPlot()//7000)
+            print("pulse", self.plotView.thonnyPlot())
             self._timer.check()
             if self.plotView.detectPulse():
                 self.beats += 1
