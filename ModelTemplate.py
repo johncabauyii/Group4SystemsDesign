@@ -16,6 +16,7 @@ from Model import *
 from Button import *
 from Counters import *
 from PulsePlotter import *
+from Displays import *
 
 """
 This is the template Model Runner - you should rename this class to something
@@ -42,16 +43,17 @@ class MyControllerTemplate:
         # Instantiate a Model. Needs to have the number of states, self as the handler
         # You can also say debug=True to see some of the transitions on the screen
         # Here is a sample for a model with 4 states
-        self._model = Model(5, self, debug=True)
+        self._model = Model(6, self, debug=True)
         
         self.plotView = PulsePlotter()
+        
+        self._display = LCDDisplay(sda=20, scl=21, i2cid=0)
         
         self.beats = 0
         
         self.color = WHITE
         
         self.tone = 1000
-        
         
         # Up to 4 buttons and a timer can be added to the model for use in transitions
         # Buttons must be added in the sequence you want them used. The first button
@@ -92,10 +94,12 @@ class MyControllerTemplate:
         # Now if you want to do different things for each state you can do it:
         if state == 0:
             self.plotView.plotPulse(self.color, self.tone)
-            print("pulse", self.plotView.thonnyPlot())
+            print("pulse", self.plotView.thonnyPlot()//7000)
             self._timer.check()
             if self.plotView.detectPulse():
                 self.beats += 1
+                
+            
                 
             
             
@@ -124,19 +128,24 @@ class MyControllerTemplate:
             self.beats = 0
             color = WHITE
             self._timer.start(5)
+            self._display.reset()
+            self._display.showText("Standby",1, 0)
             pass
         
         elif state == 1:
             # entry actions for state 1
             #print('State 1 entered')
+            self._display.reset()
             BPM = self.beats * 12
-            print(BPM)
-            if BPM <= 59:
+            self._display.showText("BPM: " + str(BPM), 0, 0)
+            if 1 <= BPM <= 59:
                 self._model.gotoState(2)
             elif   60 <= BPM <=100:
                 self._model.gotoState(3)
             elif BPM >=101:
                 self._model.gotoState(4)
+            elif BPM ==0:
+                self._model.gotoState(5)
                 
         elif state == 2:
         # entry actions for state 1
@@ -146,6 +155,7 @@ class MyControllerTemplate:
             self.tone = 500
             self._model.gotoState(0)
             BPM = 0
+            self._display.showText("Rate Low",1, 0)
         
         elif state == 3:
         # entry actions for state 1
@@ -155,6 +165,7 @@ class MyControllerTemplate:
             self.tone = 1000
             self._model.gotoState(0)
             BPM = 0
+            self._display.showText("Rate Normal",1, 0)
         
         elif state == 4:
         # entry actions for state 1
@@ -163,7 +174,16 @@ class MyControllerTemplate:
             self.tone = 1500
             self.color = RED
             self._model.gotoState(0)
-            BPM = 0 
+            BPM = 0
+            self._display.showText("Rate High",1, 0)
+            
+            
+        elif state == 5:
+            self._model.gotoState(0)
+            BPM = 0
+            self.color = WHITE
+            self._display.reset()
+            self._display.showText("Standby",1, 0)
             
 
 
