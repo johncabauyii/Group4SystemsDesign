@@ -1,11 +1,11 @@
 
-from ModelTemplate import *
+from MonitorController import *
 
 
 
 
 
-m= MyControllerTemplate()
+m= MonitorController()
 
 m.run()
 
