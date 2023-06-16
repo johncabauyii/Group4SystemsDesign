@@ -27,16 +27,20 @@ class Display:
     """
 
     def reset(self):
-        print(f"reset NOT IMPLEMENTED in {type(self).__name__}")
+        #print(f"reset NOT IMPLEMENTED in {type(self).__name__}")
+        pass
 
     def showNumber(self, number):
-        print(f"showNumber NOT IMPLEMENTED! in {type(self).__name__}")
+        #print(f"showNumber NOT IMPLEMENTED! in {type(self).__name__}")
+        pass
 
     def showText(self, text):
-        print(f"showText NOT IMPLEMENTED! in {type(self).__name__}")
+        #print(f"showText NOT IMPLEMENTED! in {type(self).__name__}")
+        pass
 
     def scroll(self, text, speed=250):
-        print(f"Scroll NOT IMPLEMENTED! in {type(self).__name__}")
+        #print(f"Scroll NOT IMPLEMENTED! in {type(self).__name__}")
+        pass
 
 
 class SevenSegmentDisplay(Display):
@@ -149,7 +153,7 @@ class LCDDisplay(Display):
         """
         
         if sda < 0:
-            print("LCDDisplay Constructor")
+            #print("LCDDisplay Constructor")
             self._lcd = GpioLcd(rs_pin=Pin(rs),
                 enable_pin=Pin(e),
                 d4_pin=Pin(d4),
@@ -158,7 +162,7 @@ class LCDDisplay(Display):
                 d7_pin=Pin(d7),
                 num_lines=2, num_columns=16)
         else:
-            print("LCDDisplay (I2C) Constructor")
+            #print("LCDDisplay (I2C) Constructor")
             i2c = I2C(i2cid, sda=Pin(sda), scl=Pin(scl), freq=400000)
             try:
                 I2C_ADDR = i2c.scan()[0]
@@ -171,7 +175,7 @@ class LCDDisplay(Display):
         clear the display screen
         """
         
-        print("LCDDisplay: reset")
+        #print("LCDDisplay: reset")
         self._lcd.clear()
 
     def showNumber(self, number, row=0, col=0):
@@ -179,7 +183,7 @@ class LCDDisplay(Display):
         show a single number
         """
         
-        print(f"LCDDisplay - showing number {number} at {row},{col}")
+        #print(f"LCDDisplay - showing number {number} at {row},{col}")
         self._lcd.move_to(col, row)
         self._lcd.putstr(f"{number}")
 
@@ -189,7 +193,7 @@ class LCDDisplay(Display):
         by default, the colon is shown
         """
         
-        print(f"LCDDisplay - showing numbers {num1}, {num2} at {row},{col}")
+        #print(f"LCDDisplay - showing numbers {num1}, {num2} at {row},{col}")
         self._lcd.move_to(col, row)
         colsym = ":" if colon else " "
         self._lcd.putstr(f"{num1}{colsym}{num2}")
@@ -200,7 +204,7 @@ class LCDDisplay(Display):
         for anything bigger than 4 characters.
         """
         
-        print(f"LCDDisplay - showing text {text} at {row},{col}")
+        #print(f"LCDDisplay - showing text {text} at {row},{col}")
         self._lcd.move_to(col, row)
         self._lcd.putstr(text)
 
@@ -263,7 +267,7 @@ class LCDHiResDisplay(Display):
     """
     
     def __init__(self, sda=20, scl=21, i2cid=0, width=128, height=32):
-        print("LCDHiResDisplay (I2C) Constructor")
+        #print("LCDHiResDisplay (I2C) Constructor")
         i2c = I2C(i2cid, sda=Pin(sda), scl=Pin(scl), freq=400000)
         I2C_ADDR = i2c.scan()[0]
         try:

@@ -51,9 +51,9 @@ class MyControllerTemplate:
         
         self.beats = 0
         
-        self.color = WHITE
+        self.color = WHITE #color for neopixel in state
         
-        self.tone = 1000
+        self.tone = 1000 #tone for buzzer in state
         
         # Up to 4 buttons and a timer can be added to the model for use in transitions
         # Buttons must be added in the sequence you want them used. The first button
@@ -69,6 +69,7 @@ class MyControllerTemplate:
         # and TIMEOUT
         
         self._model.addTransition(0, TIMEOUT, 1)
+        #go from Calculate to Decide state after recording 5 sec worth of samples
         
         # some examples:
         # etc.
@@ -93,8 +94,9 @@ class MyControllerTemplate:
             
         # Now if you want to do different things for each state you can do it:
         if state == 0:
+            #inital calculate state
             self.plotView.plotPulse(self.color, self.tone)
-            print("pulse", self.plotView.thonnyPlot()//7000)
+            self.plotView.thonnyPlot()
             self._timer.check()
             if self.plotView.detectPulse():
                 self.beats += 1
@@ -121,20 +123,15 @@ class MyControllerTemplate:
     Make sure actions here are quick
     """
     def stateEntered(self, state):
-        # Again if statements to do whatever entry/actions you need
         if state == 0:
-            # entry actions for state 0
-            #print('State 0 entered')
+            # Calculate State
             self.beats = 0
             color = WHITE
             self._timer.start(5)
             self._display.reset()
-            self._display.showText("Standby",1, 0)
-            pass
         
         elif state == 1:
-            # entry actions for state 1
-            #print('State 1 entered')
+            #Decide State
             self._display.reset()
             BPM = self.beats * 12
             self._display.showText("BPM: " + str(BPM), 0, 0)
@@ -148,8 +145,6 @@ class MyControllerTemplate:
                 self._model.gotoState(5)
                 
         elif state == 2:
-        # entry actions for state 1
-            #print('State 2 entered')
             #low state
             self.color = BLUE
             self.tone = 500
@@ -158,8 +153,6 @@ class MyControllerTemplate:
             self._display.showText("Rate Low",1, 0)
         
         elif state == 3:
-        # entry actions for state 1
-            #print('State 3 entered')
             #normal state
             self.color = GREEN
             self.tone = 1000
@@ -168,8 +161,6 @@ class MyControllerTemplate:
             self._display.showText("Rate Normal",1, 0)
         
         elif state == 4:
-        # entry actions for state 1
-            #print('State 4 entered')
             #high state
             self.tone = 1500
             self.color = RED
@@ -179,6 +170,7 @@ class MyControllerTemplate:
             
             
         elif state == 5:
+            #no pulse detected state
             self._model.gotoState(0)
             BPM = 0
             self.color = WHITE
