@@ -128,7 +128,7 @@ class MonitorController:
             self.beats = 0
             color = WHITE
             self._timer.start(5)
-            self._display.reset()
+            
         
         elif state == 1:
             #Decide State
@@ -174,7 +174,7 @@ class MonitorController:
             self._model.gotoState(0)
             BPM = 0
             self.color = WHITE
-            self._display.reset()
+            #self._display.reset()
             self._display.showText("Standby",1, 0)
             
 
@@ -197,4 +197,4 @@ class MonitorController:
 # If you are using a separate main.py or other control script,
 # you will run your model from there.
 if __name__ == '__main__':
-    MyControllerTemplate().run()
+    MonitorController().run()

@@ -31,7 +31,7 @@ This template currently implements a very simple state model that uses a button 
 transition from state 0 to state 1 then a 5 second timer to go back to state 0.
 """
 
-class MyControllerTemplate:
+class MonitorController:
 
     def __init__(self):
         
